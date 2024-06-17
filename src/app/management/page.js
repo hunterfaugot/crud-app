@@ -1,4 +1,6 @@
 // src/app/management/page.js
+"use client";
+
 import { useState } from 'react';
 
 export default function Management() {
