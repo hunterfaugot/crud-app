@@ -1,16 +1,19 @@
-// src/app/management/page.js
-"use client";
+"use client";  // Add this line at the top
 
 import { useState } from 'react';
+import Link from 'next/link';
+import { useItems } from '../../context/ItemsContext';
 
 export default function Management() {
-  const [items, setItems] = useState([]);
-  const [newItem, setNewItem] = useState('');
+  const { items, setItems } = useItems();
+  const [newItem, setNewItem] = useState('New Item');
   const [editItem, setEditItem] = useState({ index: -1, value: '' });
 
   const addItem = () => {
-    setItems([...items, newItem]);
-    setNewItem('');
+    if (newItem.trim() !== '') {
+      setItems([...items, newItem]);
+      setNewItem('New Item');
+    }
   };
 
   const deleteItem = (index) => {
@@ -19,13 +22,24 @@ export default function Management() {
   };
 
   const editExistingItem = () => {
-    const newItems = items.map((item, index) => (index === editItem.index ? editItem.value : item));
-    setItems(newItems);
-    setEditItem({ index: -1, value: '' });
+    if (editItem.value.trim() !== '') {
+      const newItems = items.map((item, index) => (index === editItem.index ? editItem.value : item));
+      setItems(newItems);
+      setEditItem({ index: -1, value: '' });
+    }
+  };
+
+  const handleEditClick = (index, value) => {
+    setEditItem({ index, value });
   };
 
   return (
     <div className="container mx-auto p-4">
+      <nav className="mb-4">
+        <Link href="/" legacyBehavior>
+          <a className="text-blue-500 hover:underline">Go to Home</a>
+        </Link>
+      </nav>
       <h1 className="text-3xl font-bold mb-4">Management Page</h1>
       <div className="mb-4">
         <input
@@ -47,9 +61,10 @@ export default function Management() {
               >
                 Delete
               </button>
+              <span className="mx-2">/</span>
               <button
                 className="ml-2 p-1 bg-green-500 text-white"
-                onClick={() => setEditItem({ index, value: item })}
+                onClick={() => handleEditClick(index, item)}
               >
                 Edit
               </button>
