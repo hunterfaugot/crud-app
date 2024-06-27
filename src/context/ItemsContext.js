@@ -5,7 +5,14 @@ import { createContext, useState, useContext } from 'react';
 const ItemsContext = createContext();
 
 export const ItemsProvider = ({ children }) => {
-  const [items, setItems] = useState(['Sample Item 1', 'Sample Item 2']);
+  const [items, setItems] = useState([
+    {
+      name: 'Sample Anime',
+      releaseYear: 2020,
+      episodeCount: 12,
+      watchStatus: 'Watched',
+    },
+  ]);
 
   return (
     <ItemsContext.Provider value={{ items, setItems }}>
@@ -15,3 +22,4 @@ export const ItemsProvider = ({ children }) => {
 };
 
 export const useItems = () => useContext(ItemsContext);
+

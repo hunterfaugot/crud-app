@@ -1,3 +1,48 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@700&display=swap'); /* Import Google Fonts */
+
+/* General Styles */
+body {
+  background-color: #a8e6cf; /* Light seafoam green background */
+  color: #0a3d62; /* Dark blue text */
+  font-family: 'Roboto', sans-serif; /* General font */
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Header and Navigation Styles */
+header, nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-family: 'Montserrat', sans-serif; /* Different font for site header */
+  font-size: 2.5rem;
+}
+
+nav a {
+  color:   #0a3d62; /* Dark blue text */
+  ;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Form and Button Styles */
+input, select, button {
+  color: black;
+}
+
+button {
+  background-color: #ff8b94; /* A contrasting color for buttons */
+}
+
+button:hover {
+  background-color: #ff6f7a; /* Darker shade on hover */
+}

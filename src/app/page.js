@@ -1,22 +1,25 @@
-"use client";  // Add this line at the top
+"use client";
 
-import Link from 'next/link';  // Import Link from next/link
-import { useItems } from '../context/ItemsContext';  // Import the custom hook
+import Link from 'next/link';
+import { useItems } from '../context/ItemsContext';
 
 export default function Home() {
-  const { items } = useItems();  // Access items from context
+  const { items } = useItems();
 
   return (
     <div className="container mx-auto p-4">
-      <nav className="mb-4">
-        <Link href="/management">
-          <span className="text-blue-500 hover:underline cursor-pointer">Go to Management</span>
-        </Link>
-      </nav>
-      <h1 className="text-3xl font-bold mb-4">Home Page</h1>
+      <header className="mb-4">
+        <h1 className="text-4xl font-bold">Anime Watch List</h1>
+        <nav>
+          <Link href="/management">
+            <span className="text-white hover:underline cursor-pointer">Go to Management</span>
+          </Link>
+        </nav>
+      </header>
+      <h2 className="text-3xl font-bold mb-4">Home Page</h2>
       <ul className="list-disc pl-5">
         {items.map((item, index) => (
-          <li key={index}>{item}</li>
+          <li key={index}>{item.name} - {item.releaseYear} - {item.episodeCount} episodes - {item.watchStatus}</li>
         ))}
       </ul>
     </div>
