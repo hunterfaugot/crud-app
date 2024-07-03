@@ -1,5 +1,5 @@
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
-import { db } from './firebase.config';
+import { db } from '../firebase.config';
 
 const animeCollectionRef = collection(db, "anime");
 
