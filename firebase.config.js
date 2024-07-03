@@ -18,8 +18,23 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app);
+let app;
+let db = null;
+
+if (typeof window !== "undefined") {
+  try {
+    if (!getApps().length) {
+      console.log("Initializing Firebase app");
+      app = initializeApp(firebaseConfig);
+    } else {
+      console.log("Using existing Firebase app");
+      app = getApp();
+    }
+    db = getFirestore(app);
+    console.log("Firestore initialized");
+  } catch (error) {
+    console.error("Firebase initialization error:", error);
+  }
+}
 
 export { db };
