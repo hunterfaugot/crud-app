@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useItems } from '../../context/ItemsContext';
+import { getAnimeList, addAnime, updateAnime, deleteAnime } from '../../firestoreService';
 
 export default function Management() {
   const { items, setItems } = useItems();
@@ -14,22 +15,32 @@ export default function Management() {
   });
   const [editAnime, setEditAnime] = useState({ index: -1, value: { name: '', releaseYear: '', episodeCount: '', watchStatus: 'None' } });
 
-  const addAnime = () => {
+  useEffect(() => {
+    fetchAnimeList();
+  }, []);
+
+  const fetchAnimeList = async () => {
+    const animeList = await getAnimeList();
+    setItems(animeList);
+  };
+
+  const handleAddAnime = async () => {
     if (newAnime.name.trim() !== '') {
-      setItems([...items, newAnime]);
+      await addAnime(newAnime);
+      fetchAnimeList();
       setNewAnime({ name: '', releaseYear: '', episodeCount: '', watchStatus: 'None' });
     }
   };
 
-  const deleteAnime = (index) => {
-    const newItems = items.filter((_, i) => i !== index);
-    setItems(newItems);
+  const handleDeleteAnime = async (id) => {
+    await deleteAnime(id);
+    fetchAnimeList();
   };
 
-  const editExistingAnime = () => {
+  const handleEditAnime = async () => {
     if (editAnime.value.name.trim() !== '') {
-      const newItems = items.map((item, index) => (index === editAnime.index ? editAnime.value : item));
-      setItems(newItems);
+      await updateAnime(editAnime.value.id, editAnime.value);
+      fetchAnimeList();
       setEditAnime({ index: -1, value: { name: '', releaseYear: '', episodeCount: '', watchStatus: 'None' } });
     }
   };
@@ -51,7 +62,7 @@ export default function Management() {
       <h2 className="text-3xl font-bold mb-4">Management Page</h2>
       <div className="mb-4">
         <h3 className="text-xl mb-2">Add New Anime</h3>
-        <label className="block text-gray-200">Name</label>
+        
         <input
           type="text"
           className="border p-2 mb-2 w-full"
@@ -59,7 +70,7 @@ export default function Management() {
           value={newAnime.name}
           onChange={(e) => setNewAnime({ ...newAnime, name: e.target.value })}
         />
-        <label className="block text-gray-200">Release Year</label>
+        
         <input
           type="number"
           className="border p-2 mb-2 w-full"
@@ -67,7 +78,7 @@ export default function Management() {
           value={newAnime.releaseYear}
           onChange={(e) => setNewAnime({ ...newAnime, releaseYear: e.target.value })}
         />
-        <label className="block text-gray-200">Episode Count</label>
+        
         <input
           type="number"
           className="border p-2 mb-2 w-full"
@@ -86,7 +97,7 @@ export default function Management() {
           <option value="To Watch">To Watch</option>
           <option value="Watching">Watching</option>
         </select>
-        <button className="p-2 bg-blue-500 text-white w-full" onClick={addAnime}>Add Anime</button>
+        <button className="p-2 bg-blue-500 text-white w-full" onClick={handleAddAnime}>Add Anime</button>
       </div>
       <ul className="list-disc pl-5 mb-4">
         {items.map((item, index) => (
@@ -95,7 +106,7 @@ export default function Management() {
             <div>
               <button
                 className="ml-2 p-1 bg-red-500 text-white"
-                onClick={() => deleteAnime(index)}
+                onClick={() => handleDeleteAnime(item.id)}
               >
                 Delete
               </button>
@@ -148,7 +159,7 @@ export default function Management() {
             <option value="To Watch">To Watch</option>
             <option value="Watching">Watching</option>
           </select>
-          <button className="p-2 bg-blue-500 text-white w-full" onClick={editExistingAnime}>
+          <button className="p-2 bg-blue-500 text-white w-full" onClick={handleEditAnime}>
             Update Anime
           </button>
         </div>

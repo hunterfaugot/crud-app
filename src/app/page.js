@@ -2,9 +2,20 @@
 
 import Link from 'next/link';
 import { useItems } from '../context/ItemsContext';
+import { useEffect } from 'react';
+import { getAnimeList } from '../firestoreService';
 
 export default function Home() {
-  const { items } = useItems();
+  const { items, setItems } = useItems();
+
+  useEffect(() => {
+    fetchAnimeList();
+  }, []);
+
+  const fetchAnimeList = async () => {
+    const animeList = await getAnimeList();
+    setItems(animeList);
+  };
 
   return (
     <div className="container mx-auto p-4">
