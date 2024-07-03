@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -20,6 +21,7 @@ const firebaseConfig = {
 // Initialize Firebase
 let app;
 let db = null;
+let auth = null;
 
 if (typeof window !== "undefined") {
   try {
@@ -31,10 +33,13 @@ if (typeof window !== "undefined") {
       app = getApp();
     }
     db = getFirestore(app);
-    console.log("Firestore initialized");
+    auth = getAuth(app);
+    console.log("Firestore and Auth initialized");
   } catch (error) {
     console.error("Firebase initialization error:", error);
   }
+} else {
+  console.log("Firebase initialization skipped on server side");
 }
 
-export { db };
+export { db, auth };

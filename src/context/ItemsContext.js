@@ -1,18 +1,11 @@
 "use client";
 
-import { createContext, useState, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 const ItemsContext = createContext();
 
 export const ItemsProvider = ({ children }) => {
-  const [items, setItems] = useState([
-    {
-      name: 'Sample Anime',
-      releaseYear: 2020,
-      episodeCount: 12,
-      watchStatus: 'Watched',
-    },
-  ]);
+  const [items, setItems] = useState([]);
 
   return (
     <ItemsContext.Provider value={{ items, setItems }}>
@@ -21,5 +14,6 @@ export const ItemsProvider = ({ children }) => {
   );
 };
 
-export const useItems = () => useContext(ItemsContext);
-
+export const useItems = () => {
+  return useContext(ItemsContext);
+};

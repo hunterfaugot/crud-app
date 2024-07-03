@@ -16,12 +16,15 @@ export default function Management() {
   const [editAnime, setEditAnime] = useState({ index: -1, value: { name: '', releaseYear: '', episodeCount: '', watchStatus: 'None' } });
 
   useEffect(() => {
-    fetchAnimeList();
+    if (typeof window !== "undefined") {
+      fetchAnimeList();
+    }
   }, []);
 
   const fetchAnimeList = async () => {
     const animeList = await getAnimeList();
     setItems(animeList);
+    console.log("Anime list set:", animeList);
   };
 
   const handleAddAnime = async () => {
@@ -29,6 +32,7 @@ export default function Management() {
       await addAnime(newAnime);
       fetchAnimeList();
       setNewAnime({ name: '', releaseYear: '', episodeCount: '', watchStatus: 'None' });
+      console.log("Added new anime:", newAnime);
     }
   };
 
@@ -53,11 +57,6 @@ export default function Management() {
     <div className="container mx-auto p-4">
       <header className="mb-4">
         <h1 className="text-4xl font-bold">Anime Watch List</h1>
-        <nav>
-          <Link href="/" legacyBehavior>
-            <a className="text-white hover:underline">Go to Home</a>
-          </Link>
-        </nav>
       </header>
       <h2 className="text-3xl font-bold mb-4">Management Page</h2>
       <div className="mb-4">
