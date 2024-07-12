@@ -16,6 +16,9 @@ export default function Layout({ children }) {
             <Link href="/login" legacyBehavior>
               <a className="text-white hover:underline">Login</a>
             </Link>
+            <Link href="/register" legacyBehavior>
+              <a className="text-white hover:underline">Register</a>
+            </Link>
           </nav>
         </div>
       </header>
@@ -25,3 +28,4 @@ export default function Layout({ children }) {
     </div>
   );
 }
+
