@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { register } from '../../authService'; // Ensure the path is correct
+import { register } from '../../authService';
 
 export default function Register() {
   const [email, setEmail] = useState('');
@@ -23,7 +23,7 @@ export default function Register() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-4xl font-bold mb-4">Register</h1>
-      {message && <p className="mb-4 text-green-500">{message}</p>}
+      {message && <p className={`mb-4 ${message.includes("successful") ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
       <input
         type="email"
         className="border p-2 mb-2 w-full"

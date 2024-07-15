@@ -1,16 +1,15 @@
-import { auth } from '../firebase.config'; // Ensure the path is correct
+import { auth } from '../firebase.config';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
-export const register = async (email, password) => {
+export async function register(email, password) {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    console.log("User registered:", userCredential.user);
     return userCredential.user;
   } catch (error) {
     console.error("Error registering user:", error);
     throw error;
   }
-};
+}
 
 export const signIn = async (email, password) => {
   try {

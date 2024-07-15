@@ -1,7 +1,6 @@
-import { initializeApp, getApps, getApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -10,30 +9,30 @@ const firebaseConfig = {
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: "G-7V7EKKYP33"
+  measurementId: 'G-7V7EKKYP33',
 };
 
 let app;
 let db = null;
 let auth = null;
 
-if (typeof window !== "undefined") {
+if (typeof window !== 'undefined') {
   try {
     if (!getApps().length) {
-      console.log("Initializing Firebase app");
+      console.log('Initializing Firebase app');
       app = initializeApp(firebaseConfig);
     } else {
-      console.log("Using existing Firebase app");
+      console.log('Using existing Firebase app');
       app = getApp();
     }
     db = getFirestore(app);
     auth = getAuth(app);
-    console.log("Firestore and Auth initialized");
+    console.log('Firestore and Auth initialized');
   } catch (error) {
-    console.error("Firebase initialization error:", error);
+    console.error('Firebase initialization error:', error);
   }
 } else {
-  console.log("Firebase initialization skipped on server side");
+  console.log('Firebase initialization skipped on server side');
 }
 
 export { db, auth };
